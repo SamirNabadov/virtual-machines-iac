@@ -1,3 +1,7 @@
 hosts_data:
 - hostname: test01.local.az
   ip: 192.168.1.10
+- hostname: test02.local.az
+  ip: 192.168.1.11
+- hostname: test03.local.az
+  ip: 192.168.1.13
