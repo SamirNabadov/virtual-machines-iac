@@ -1,0 +1,13 @@
+---
+- name: getting facts about the Virtual Machine
+  vmware_guest_info:
+    hostname: "{{ vmware_vcenter_host }}"
+    username: "{{ vmware_vcenter_username }}"
+    password: "{{ vmware_vcenter_password }}"
+    datacenter: "{{ vmware_vcenter_datacenter }}"
+    name: "{{ item.hostname }}"
+    folder: "/{{ vmware_vcenter_datacenter }}/vm/"
+    validate_certs: false
+  loop:  "{{ hosts_data }}"
+  register: vm_facts
+  

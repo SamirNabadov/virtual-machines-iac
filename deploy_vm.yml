@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  connection: local
+  become: yes
+  vars_files:
+    - vars/vm_vars.yml
+    - vars/host_ip_vars.yml
+  tasks:
+    - include: vm_operation/create_vm.yml
+    - include: vm_operation/inventory_config.yml
+
+- hosts: recently_created
+  vars_files:
+    - vars/os_vars.yml
+    - vars/host_ip_vars.yml
+  tasks: 
+    - include: vm_operation/firewall_selinux.yml
+    - include: vm_operation/set_hostname.yml
+    - include: vm_operation/prepare_user.yml
+    - include: vm_operation/install_packages.yml
+    - include: vm_operation/ntp_client.yml

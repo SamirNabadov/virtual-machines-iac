@@ -1,0 +1,29 @@
+---
+# ------------------------------------------------------------------------------
+# Set the settings of vCenter Server according environment
+# ------------------------------------------------------------------------------
+vmware_vcenter_host: 192.168.1.2
+vmware_vcenter_datacenter: TEST
+vmware_vcenter_cluster: TEST-CLUSTER
+vmware_vcenter_datastore: TEST-DS01
+vmware_vcenter_resource_pool: Resources
+vmware_vcenter_username: test@test.local
+vmware_vcenter_password: test
+template_base: "Centos7_template"
+vmware_hosts:
+    note: "Logging infrastructure"
+    customization:
+      dns_servers:
+      - 8.8.8.8
+    so_guest: ""
+    vcpus: 4
+    memory_size: 8192
+    disks_list:
+      - size_gb: 60
+    networks:
+        name: "TEST-VLAN-1"
+        dvswitch_name: "TEST_SW"
+        netmask: "255.255.255.0"
+        gateway: "192.168.1.1"
+    vm_folder: "TEST"
+    mgmt_state: ""

@@ -1,0 +1,3 @@
+hosts_data:
+- hostname: test01.local.az
+  ip: 192.168.1.10

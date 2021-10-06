@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  connection: local
+  become: yes
+  vars_files:
+     - vars/vm_vars.yml
+     - vars//host_ip_vars.yml
+  tasks:
+    - include: vm_operation/getting_facts.yml
+    - include: vm_operation/delete_vm.yml
+

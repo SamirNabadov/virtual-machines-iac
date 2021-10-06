@@ -1,0 +1,20 @@
+---
+- name: Wait for internet access to proceed to package installation
+  wait_for:
+    host: google.com
+    port: 443
+    sleep: 60
+    delay: 10
+    state: started
+  retries: 10
+  register: internet
+  until: internet.failed == false
+
+- name: Install neccessary packages
+  yum:
+    name: "{{ common_packages }}"
+    state: present
+    
+- name: debug ansible_fqdn
+  debug:
+    var: ansible_fqdn

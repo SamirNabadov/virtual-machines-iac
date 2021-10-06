@@ -1,0 +1,43 @@
+- name: creating a VM Linux at vSphere vCenter
+  vmware_guest:
+    hostname: "{{ vmware_vcenter_host }}"
+    username: "{{ vmware_vcenter_username }}"
+    password: "{{ vmware_vcenter_password }}"
+    datacenter: "{{ vmware_vcenter_datacenter }}"
+    cluster: "{{ vmware_vcenter_cluster }}"
+    datastore: "{{ vmware_vcenter_datastore }}"
+    resource_pool: "{{ vmware_vcenter_resource_pool }}"
+    annotation: "{{ vmware_hosts.note }}"
+    name: "{{ item.hostname }}"
+    customization: "{{ vmware_hosts.customization }}"
+    guest_id: "{{ vmware_hosts.so_guest }}"
+    folder: "{{ vmware_hosts.vm_folder }}"
+    state: poweredon
+    disk: "{{ vmware_hosts.disks_list }}"
+    hardware:
+      memory_mb: "{{ vmware_hosts.memory_size }}"
+      num_cpus: "{{ vmware_hosts.vcpus }}"
+    networks:
+    - name: "{{ vmware_hosts.networks.name }}"
+      dvswitch_name: "{{ vmware_hosts.networks.dvswitch_name }}"
+      start_connected: True
+      ip: "{{ item.ip}}"
+      netmask: "{{ vmware_hosts.networks.netmask }}"
+      gateway: "{{ vmware_hosts.networks.gateway }}"
+      device_type: "vmxnet3"
+      type: "static"
+    template: "{{ template_base }}"
+    validate_certs: false
+    wait_for_ip_address: true
+  loop: "{{ hosts_data }}"
+  async: 300
+  poll: 0
+  register: host_created
+
+- name: Wait for asynchronous job to end
+  async_status:
+    jid: '{{ item.ansible_job_id }}'
+  register: async_job_result
+  until: async_job_result.finished
+  retries: 60
+  loop: "{{ host_created.results }}"

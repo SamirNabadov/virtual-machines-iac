@@ -1,0 +1,35 @@
+# Newly created hosts' login/password | used as ansible_facts
+ansible_user: root
+ansible_password: root  # It get from VSphere Template image
+# Cretentials for create new user
+os_username: ansible
+os_password: ansible
+# Packages need to be installed on created hosts
+common_packages: 
+    - sshpass
+    - vim
+    - tuned
+    - net-tools
+    - make
+    - zip 
+    - unzip
+    - wget
+    - yum-utils
+    - iptables-services
+    - telnet
+    - tmux
+    - openssh-server
+    - mc
+    - iotop
+    - wget
+    - tcpdump
+    - pinfo
+    - bash-completion
+    - gcc
+    - sysstat
+    - lsof
+    - rsync
+    - nc
+    - python3
+    - ntp
+    - ntpdate

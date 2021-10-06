@@ -1,0 +1,8 @@
+---
+- name: add hosts in inventory
+  add_host:
+    name: "{{ item.ip }}"
+    group: recently_created
+    ansible_connection: ssh
+  loop: 
+  - "{{ hosts_data }}"

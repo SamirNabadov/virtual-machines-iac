@@ -1,0 +1,21 @@
+---
+- name: shutdown the VM
+  vmware_guest:
+    hostname: "{{ vmware_vcenter_host }}"
+    username: "{{ vmware_vcenter_username  }}"
+    password: "{{ vmware_vcenter_password  }}"
+    name: "{{ item.instance.hw_name }}"
+    state: poweredoff
+    validate_certs: false
+  with_flattened: "{{ vm_facts.results }}"
+
+- name: deleting the VM
+  vmware_guest:
+    hostname: "{{ vmware_vcenter_host }}"
+    username: "{{ vmware_vcenter_username }}"
+    password: "{{ vmware_vcenter_password }}"
+    name: "{{ item.instance.hw_name  }}"
+    state: absent
+    validate_certs: false
+  with_flattened: "{{ vm_facts.results }}"
+

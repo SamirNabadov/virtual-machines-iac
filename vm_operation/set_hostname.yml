@@ -1,0 +1,11 @@
+---
+- name: Debug Shell Sample Command
+  shell: whoami; hostnamectl
+
+- name: Set hostname for newly created VMs
+  shell: hostnamectl set-hostname  "{{ item.hostname }}"
+  when: ansible_default_ipv4.address == item.ip
+  loop: "{{ hosts_data }}"
+
+- name: Gathering hosts facts after hostname changing
+  setup: 
